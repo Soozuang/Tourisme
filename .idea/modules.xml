@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/OhMyTrip.iml" filepath="$PROJECT_DIR$/OhMyTrip.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tourisme/Tourisme.iml" filepath="$PROJECT_DIR$/Tourisme/Tourisme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spacelib/spacelib.iml" filepath="$PROJECT_DIR$/spacelib/spacelib.iml" />
+    </modules>
+  </component>
+</project>

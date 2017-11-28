@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#004d40</color>
+    <color name="colorPrimaryDark">#00251a</color>
+    <color name="colorAccent">#39796b</color>
+    <color name="primaryDark">#273833</color>
+    <color name="btnSignUp">#007BA7</color>
+    <color name="btnSignUpActive">#002E63</color>
+    <color name="lightOrange">#fdf2df</color>
+    <color name="darkerOrange">#fdf2df</color>
+    <color name="overlayBackground">#ebd6ab</color>
+    <color name="overlayActionBar">#0e0d0e</color>
+
+    // Space navigation bar color
+    <color name="centre_color">#262626</color>
+    <color name="inactive_color">#C7C7C7</color>
+    <color name="whiteNew">#fffffe</color>
+    <color name="google_plus_color">#DC4437</color>
+    <color name="google_plus_background_color">#212121</color>
+    <color name="google_plus_inactive_color">#999999</color>
+</resources>

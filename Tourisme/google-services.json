@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1097692173709",
+    "firebase_url": "https://ohmytrip-acd29.firebaseio.com",
+    "project_id": "ohmytrip-acd29",
+    "storage_bucket": "ohmytrip-acd29.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097692173709:android:2835b9825680b4b2",
+        "android_client_info": {
+          "package_name": "com.android.soozuang.ohmytrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097692173709-us3ffa2fpb2c25at4gs1mk3dn6279gma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.soozuang.ohmytrip",
+            "certificate_hash": "c9b91c6bfe35f6f75fa2943ce946b8434694ea37"
+          }
+        },
+        {
+          "client_id": "1097692173709-uktfe5dhpq8a0rphd4unk242fig2l8ei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6s8tTe1UmdsOqcyvrjyOaZf4tfpS5T5c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097692173709-uktfe5dhpq8a0rphd4unk242fig2l8ei.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

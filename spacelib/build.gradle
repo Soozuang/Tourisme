@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+    }
+    buildTypes {
+        release {
+            tasks.withType(Javadoc).all { enabled = false }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:26.+'
+    //compile 'com.android.support:support-v4:26.0.1'
+    compile 'com.android.support:design:26.+'
+}
+
+publish {
+    groupId = 'com.github.armcha'
+    artifactId = 'SpaceNavigationView'
+    publishVersion = '1.6.0'
+    desc = 'Spaces Navigation View'
+    licences = ['MIT']
+    website = 'https://github.com/armcha/Space-Navigation-View'
+}
