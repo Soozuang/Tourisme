@@ -10,12 +10,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:scrollbars="none"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.luseen.spacenavigation.SpaceNavigationView
         android:id="@+id/space"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:centre_part_linear="true"

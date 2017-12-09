@@ -44,22 +44,4 @@ public class Province {
         Image = image;
     }
 
-    public ArrayList<Province> getPlayers(String gameId) {
-        final ArrayList<Province> commentKeys = new ArrayList<>();
-        DatabaseReference nishi = FirebaseDatabase.getInstance().getReference("Category");
-        Query query = nishi.orderByChild("name").equalTo(gameId);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
-                    commentKeys.add(childSnapshot.child("name").getValue(Province.class));
-                }
-                Log.d("Data:", commentKeys.toString());
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        return commentKeys;
-    }
 }

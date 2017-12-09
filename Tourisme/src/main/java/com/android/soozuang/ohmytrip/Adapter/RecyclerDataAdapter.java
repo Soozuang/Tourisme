@@ -39,20 +39,13 @@ public class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapte
 
     @Override
     public void onBindViewHolder(ItemRowHolder itemRowHolder, int i) {
-
         final String sectionName = dataList.get(i).getHeaderTitle();
-
         ArrayList singleSectionItems = dataList.get(i).getAllPro();
-
         itemRowHolder.itemTitle.setText(sectionName);
-
         SectionDataAdapter itemListDataAdapter = new SectionDataAdapter(mContext, singleSectionItems);
-
         itemRowHolder.recycler_view_list.setHasFixedSize(true);
         itemRowHolder.recycler_view_list.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         itemRowHolder.recycler_view_list.setAdapter(itemListDataAdapter);
-
-
         itemRowHolder.recycler_view_list.setNestedScrollingEnabled(false);
 
        /*  itemRowHolder.recycler_view_list.setOnTouchListener(new View.OnTouchListener() {
@@ -78,12 +71,7 @@ public class RecyclerDataAdapter extends RecyclerView.Adapter<RecyclerDataAdapte
         itemRowHolder.btnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Toast.makeText(v.getContext(), "click event on more, "+sectionName , Toast.LENGTH_SHORT).show();
-
-
-
             }
         });
 

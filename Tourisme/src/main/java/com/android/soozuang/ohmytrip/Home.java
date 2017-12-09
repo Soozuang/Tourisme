@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.soozuang.ohmytrip.Adapter.RecyclerDataAdapter;
+import com.android.soozuang.ohmytrip.Adapter.SectionDataAdapter;
 import com.android.soozuang.ohmytrip.Interface.ItemClickListener;
 import com.android.soozuang.ohmytrip.Model.Province;
 import com.android.soozuang.ohmytrip.Model.SectionProvince;
@@ -36,56 +37,41 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
+
 public class Home extends AppCompatActivity {
 
     private SpaceNavigationView spaceNavigationView;
     FirebaseDatabase database;
-    DatabaseReference category;
-    ArrayList<SectionProvince> allSampleData;
-    ArrayList<Province> allProvince;
+
+    ArrayList<SectionProvince> allSection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set no top bar view
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
 
-        // Get database from Firebase
-        allSampleData = new ArrayList<SectionProvince>();
-        allProvince = new ArrayList<Province>();
+        allSection = new ArrayList<SectionProvince>();
         database = FirebaseDatabase.getInstance();
-        category = database.getReference("Category");
-        category.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot provinceSnapshot: dataSnapshot.getChildren()) {
-                    Province sample = provinceSnapshot.getValue(Province.class);
-                    allProvince.add(sample);
-                }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        // Design Space Navigation View
+        // Edit spacenavigation View
         spaceNavigationView = (SpaceNavigationView)findViewById(R.id.space);
         spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
         spaceNavigationView.addSpaceItem(new SpaceItem("FAVORITE", R.drawable.heart));
         spaceNavigationView.addSpaceItem(new SpaceItem("ACCOUNT", R.drawable.account));
         spaceNavigationView.setCentreButtonIcon(R.drawable.home);
-        spaceNavigationView.setCentreButtonColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        spaceNavigationView.setCentreButtonRippleColor(ContextCompat.getColor(this, R.color.selected_item_color));
-        spaceNavigationView.setSpaceBackgroundColor(ContextCompat.getColor(this, R.color.space_white));
-        spaceNavigationView.setActiveSpaceItemColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        spaceNavigationView.setInActiveSpaceItemColor(ContextCompat.getColor(this, R.color.inactive_color));
+        spaceNavigationView.setSpaceItemIconSize(R.dimen.space_item_icon_size);
+        spaceNavigationView.setCentreButtonColor(ContextCompat.getColor(this, R.color.fbutton_color_midnight_blue));
+        spaceNavigationView.setCentreButtonRippleColor(ContextCompat.getColor(this, R.color.fbutton_color_midnight_blue));
+        spaceNavigationView.setSpaceBackgroundColor(ContextCompat.getColor(this, R.color.fbutton_color_clouds));
+        spaceNavigationView.setActiveSpaceItemColor(ContextCompat.getColor(this, R.color.fbutton_color_midnight_blue));
+        spaceNavigationView.setInActiveSpaceItemColor(ContextCompat.getColor(this, R.color.cardview_dark_background));
         spaceNavigationView.showIconOnly();
+
         spaceNavigationView.setCentreButtonIconColorFilterEnabled(false);
+
         spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
@@ -103,6 +89,7 @@ public class Home extends AppCompatActivity {
                 Log.d("onItemReselected ", "" + itemIndex + " " + itemName);
             }
         });
+
         spaceNavigationView.setSpaceOnLongClickListener(new SpaceOnLongClickListener() {
             @Override
             public void onCentreButtonLongClick() {
@@ -115,7 +102,16 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        setUpRecyclerView();
+
+        suggestProvince();
+        suggestPlace();
+        suggestResort();
+        suggestFood();
+        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.recyclerView);
+        my_recycler_view.setHasFixedSize(true);
+        RecyclerDataAdapter adapter = new RecyclerDataAdapter(this, allSection);
+        my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        my_recycler_view.setAdapter(adapter);
     }
 
     @Override
@@ -124,42 +120,84 @@ public class Home extends AppCompatActivity {
         spaceNavigationView.onSaveInstanceState(outState);
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
-        MenuItem item = menu.findItem(R.id.tvTitle);
-        SearchView searchView = (SearchView)item.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    private void suggestProvince() {
+        database.getReference("Province").addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Province> allProvince = new ArrayList<Province>();
+                for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                    allProvince.add(new Province(provinceSnapshot.child("name").getValue(String.class),provinceSnapshot.child("image").getValue(String.class)));
+                }
+                SectionProvince temp = new SectionProvince();
+                temp.setHeaderTitle("Du lịch vùng miền ");
+                allSection.add(temp);
+                temp.setAllPro(allProvince);
             }
-
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-
-        return super.onCreateOptionsMenu(menu);
-    } */
-
-    private void setUpRecyclerView() {
-        // Firebase execution...
-        getProvinceData();
-        RecyclerView my_recycler_view = (RecyclerView) findViewById(R.id.recyclerView);
-        my_recycler_view.setHasFixedSize(true);
-        RecyclerDataAdapter adapter = new RecyclerDataAdapter(this, allSampleData);
-        my_recycler_view.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        my_recycler_view.setAdapter(adapter);
     }
 
-    private void getProvinceData() {
-        SectionProvince dm = new SectionProvince();
-        dm.setHeaderTitle("Du lịch theo vùng miền ");
-        dm.setAllPro(allProvince);
-        allSampleData.add(dm);
-        //}
+    private void suggestPlace(){
+        database.getReference("Place").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Province> allPlace = new ArrayList<Province>();
+                for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                    allPlace.add(new Province(provinceSnapshot.child("name").getValue(String.class),provinceSnapshot.child("image").getValue(String.class)));
+                }
+                SectionProvince temp = new SectionProvince();
+                temp.setHeaderTitle("Các địa điểm nổi tiếng");
+                allSection.add(temp);
+                temp.setAllPro(allPlace);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
+    private void suggestResort(){
+        database.getReference("Resort").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Province> allPlace = new ArrayList<Province>();
+                for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                    allPlace.add(new Province(provinceSnapshot.child("name").getValue(String.class),provinceSnapshot.child("image").getValue(String.class)));
+                }
+                SectionProvince temp = new SectionProvince();
+                temp.setHeaderTitle("Khu nghỉ dưỡng");
+                allSection.add(temp);
+                temp.setAllPro(allPlace);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void suggestFood(){
+        database.getReference("Food").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Province> allPlace = new ArrayList<Province>();
+                for (DataSnapshot provinceSnapshot : dataSnapshot.getChildren()) {
+                    allPlace.add(new Province(provinceSnapshot.child("name").getValue(String.class),provinceSnapshot.child("image").getValue(String.class)));
+                }
+                SectionProvince temp = new SectionProvince();
+                temp.setHeaderTitle("Các món ăn ngon");
+                allSection.add(temp);
+                temp.setAllPro(allPlace);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" >
+        <shape>
+            <gradient
+                android:startColor="@color/fbutton_color_midnight_blue"
+                android:endColor="@color/fbutton_color_midnight_blue"
+                android:angle="270" />
+            <stroke
+                android:width="3dp"
+                android:color="@color/fbutton_color_alizarin" />
+            <corners
+                android:radius="10dp" />
+            <padding
+                android:left="10dp"
+                android:top="5dp"
+                android:right="10dp"
+                android:bottom="0dp" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true" >
+        <shape>
+            <gradient
+                android:endColor="@color/fbutton_color_green_sea"
+                android:startColor="@color/fbutton_color_green_sea"
+                android:angle="270" />
+            <corners
+                android:radius="10dp" />
+
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <gradient
+                android:endColor="@color/btnSignUp"
+                android:startColor="@color/btnSignUp"
+                android:angle="0" />
+            <stroke
+                android:width="0dp"
+                android:color="@color/fbutton_color_midnight_blue" />
+            <corners
+                android:radius="7dp" />
+
+        </shape>
+    </item>
+</selector>

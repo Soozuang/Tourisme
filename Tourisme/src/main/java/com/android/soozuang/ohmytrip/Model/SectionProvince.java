@@ -10,7 +10,7 @@ public class SectionProvince {
     private ArrayList<Province> allPro;
 
     public SectionProvince(){
-
+        allPro = new ArrayList<Province>();
     }
 
     public SectionProvince(String headerTitle, ArrayList<Province> allPro) {
